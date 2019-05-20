@@ -1,0 +1,8 @@
+.crop {
+  overflow: hidden;
+}
+
+.star-container {
+  cursor: pointer;
+  width: 75px;
+}

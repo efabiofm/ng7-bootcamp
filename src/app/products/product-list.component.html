@@ -1,0 +1,54 @@
+<div class="card">
+  <div class="card-header">Product List</div>
+  <div class="card-body">
+    <div *ngIf="products && products.length; else elseBlock">
+      <div class="row">
+        <div class="col-md-2">Filter by:</div>
+        <div class="col-md-2">
+          <!-- square brackets for binding property -->
+          <!-- parenthesis for binding events -->
+          <!-- both for two-way binding -->
+          <!-- asterisk is for structural directives like *ngIf which changes DOM elementss -->
+          <input type="text" [(ngModel)]="listFilter"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <!-- double brackets for interpolation (one-way binding) -->
+          <h4>Filtered by: {{listFilter}}</h4>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                <button class="btn btn-primary" (click)="showImage = !showImage">
+                  {{showImage ? 'Hide' : 'Show'}} image
+                </button>
+              </th>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of filteredProducts">
+              <td>
+                <img *ngIf="showImage" [src]="p.imgUrl" width="75px"/>
+              </td>
+              <td>{{p.code | convertToSpaces: '-'}}</td>
+              <td>{{p.name}}</td>
+              <td>{{p.price | currency: 'USD'}}</td>
+              <td>
+                <pm-star [rating]="p.rating" (notify)="onNotify($event)"></pm-star>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock>No entries</ng-template>
+</div>
